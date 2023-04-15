@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - name: Checkout code
@@ -22,12 +22,3 @@ jobs:
 
     - name: Build
       run: npm run build
-
-    - name: Deploy to DigitalOcean
-      uses: digitalocean/action-doctl@v2
-      with:
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-        cmd: |
-          doctl auth init
-          doctl compute droplet list
-          doctl compute scp --recursive dist/ root@198.211.104.230:/var/www/html/
